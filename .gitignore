@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.streamlit/secrets.toml
+
+dados/*
+!dados/.gitkeep
+
+*.nc
+*.nc4
+*.grib
+*.grib2
+*.npz
+*.npy
+
+.DS_Store
