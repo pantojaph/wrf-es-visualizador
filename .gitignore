@@ -15,3 +15,6 @@ dados/*
 *.npy
 
 .DS_Store
+
+# Dados processados utilizados no protótipo web
+!dados/wrf_d02_precipitacao.npz
