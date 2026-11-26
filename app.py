@@ -155,7 +155,11 @@ with st.sidebar:
     opcoes = [h for h in [1, 3, 6, 12, 24, 48, 72, 90] if h <= n]
     janela = st.selectbox("Acumulado", opcoes, index=min(4, len(opcoes) - 1),
                           format_func=lambda h: f"{h} horas")
-    fim = st.slider("Prazo final de previsão (+h)", min_value=janela, max_value=n, value=n)
+    if janela == n:
+        fim = n
+        st.caption(f"Prazo final fixo: +{fim} h (janela integral da rodada).")
+    else:
+        fim = st.slider("Prazo final de previsão (+h)", min_value=janela, max_value=n, value=n)
     periodo = pd.Timestamp(tempos[fim], tz="UTC")
     st.caption(f"Validade: {periodo:%d/%m/%Y %H:%M} UTC | "
                f"{periodo.tz_convert('America/Sao_Paulo'):%d/%m/%Y %H:%M} BRT")
