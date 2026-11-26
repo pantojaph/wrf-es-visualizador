@@ -4,17 +4,17 @@ __pycache__/
 .env
 .streamlit/secrets.toml
 
+# Mantém os dados meteorológicos compactos e a cartografia exportada.
 dados/*
 !dados/.gitkeep
+!dados/*.npz
+!dados/*continental.geojson
 
+# Nunca publicar os arquivos brutos do WRF.
 *.nc
 *.nc4
 *.grib
 *.grib2
-*.npz
 *.npy
 
 .DS_Store
-
-# Dados processados utilizados no protótipo web
-!dados/wrf_d02_precipitacao.npz
