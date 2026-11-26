@@ -199,7 +199,7 @@ esq, dir = st.columns([1.35, 1])
 with esq:
     st.subheader("Distribuição espacial da precipitação")
     fig = gerar_mapa(campo, lat, lon, estado, municipios, region, ponto, max_es, period)
-    st.pyplot(fig, use_container_width=True)
+    st.pyplot(fig, width="stretch")
     plt.close(fig)
     st.caption("Contornos interpolados apenas para representação visual. "
                "Cálculos e séries utilizam a grade nativa, sem filtro ou interpolação.")
@@ -225,7 +225,7 @@ with dir:
         yaxis_title="Precipitação horária (mm)",
         margin=dict(l=25, r=10, t=15, b=35)
     )
-    st.plotly_chart(bars, use_container_width=True)
+    st.plotly_chart(bars, width="stretch")
     st.write(f"**Ponto WRF:** {ponto[0]:.4f}°, {ponto[1]:.4f}° | grade j={j}, i={i}")
     st.download_button("Baixar série horária CSV",
                        data=serie.to_csv(index=False).encode("utf-8-sig"),
