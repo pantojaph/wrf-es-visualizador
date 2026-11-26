@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from shapely.geometry import Point, shape
-from shapely import covers_xy
+from shapely import intersects_xy
 import streamlit as st
 
 
@@ -178,7 +178,7 @@ a = (np.sin((np.deg2rad(lat) - phi) / 2) ** 2
 dist = 2 * 6371 * np.arcsin(np.sqrt(np.clip(a, 0, 1)))
 j, i = np.unravel_index(np.argmin(dist), dist.shape)
 ponto = (float(lat[j, i]), float(lon[j, i]))
-mask = covers_xy(estado, lon, lat) if estado is not None else None
+mask = intersects_xy(estado, lon, lat) if estado is not None else None
 max_es = maximo(campo, lat, lon, mask) if mask is not None else None
 max_full = maximo(campo, lat, lon)
 
