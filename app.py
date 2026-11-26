@@ -10,8 +10,7 @@ from matplotlib.colors import BoundaryNorm, ListedColormap
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-from shapely.geometry import shape
-from shapely.ops import unary_union
+from shapely.geometry import Point, shape
 from shapely import covers_xy
 import streamlit as st
 
@@ -81,8 +80,9 @@ def cartografia():
 
 
 def plot_geometry(ax, geom, **kwargs):
-    if geom.geom_type == "Polygon":
-        coords = np.asarray(geom.exterior.coords)
+    if geom.geom_type in ("Polygon", "LineString", "LinearRing"):
+        line = geom.exterior if geom.geom_type == "Polygon" else geom
+        coords = np.asarray(line.coords)
         ax.plot(coords[:, 0], coords[:, 1], **kwargs)
     elif hasattr(geom, "geoms"):
         for sub in geom.geoms:
@@ -205,7 +205,7 @@ with esq:
                "Cálculos e séries utilizam a grade nativa, sem filtro ou interpolação.")
     if max_es:
         municipio = next((name for name, geom in municipios
-                          if geom.covers(shape({"type": "Point", "coordinates": [max_es[2], max_es[1]]}))),
+                          if geom.covers(Point(max_es[2], max_es[1]))),
                          "Município não identificado")
         st.write(f"**Máximo no ES:** {max_es[0]:.1f} mm | "
                  f"{municipio} | {max_es[1]:.4f}°, {max_es[2]:.4f}°")
